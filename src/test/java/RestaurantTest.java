@@ -5,10 +5,13 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -93,5 +96,42 @@ class RestaurantTest {
         List<Item> menuItems = restaurant.getMenu();
 
         assertThat(110, equalTo(restaurant.totalOrderAmount(menuItems)));
+    }
+
+    @Test
+    public void selecting_zero_items_should_return_totalAmount_as_zero(){
+//        LocalTime openingTime = LocalTime.parse("10:30:00");
+//        LocalTime closingTime = LocalTime.parse("22:00:00");
+//        restaurant = new Restaurant("Amelie's cafe","Hyderabad",openingTime,closingTime);
+
+        List<Item> menuItems = restaurant.getMenu();
+        menuItems.clear();
+        assertThat(menuItems, hasSize(0));
+
+        assertEquals(0, restaurant.totalOrderAmount(menuItems));
+    }
+
+    @Test
+    public void selecting_random_items_should_return_totalAmount_of_selected_items_only(){
+//        LocalTime openingTime = LocalTime.parse("10:30:00");
+//        LocalTime closingTime = LocalTime.parse("22:00:00");
+//        restaurant = new Restaurant("Amelie's cafe","Hyderabad",openingTime,closingTime);
+        restaurant.addToMenu("Irani Chai", 20);
+        restaurant.addToMenu("Chole Bhature", 40);
+        restaurant.addToMenu("Idli", 20);
+        restaurant.addToMenu("Dosa", 30);
+
+        int menuSize = restaurant.getMenu().size();
+
+        Random random = new Random();
+        int randomValue = random.nextInt(menuSize);
+
+        List<Item> randomItems = new ArrayList<Item>();
+
+        Item item = restaurant.getMenu().get(randomValue);
+        randomItems.add(item);
+
+        // Test if the random item price is returned by the totalOrderAmount method
+        assertThat(item.getPrice(), equalTo(restaurant.totalOrderAmount(randomItems)));
     }
 }
