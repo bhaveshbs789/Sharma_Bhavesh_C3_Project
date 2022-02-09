@@ -5,7 +5,7 @@ import java.util.List;
 public class RestaurantService {
     private static List<Restaurant> restaurants = new ArrayList<>();
 
-    public Restaurant findRestaurantByName(String restaurantName){
+    public Restaurant findRestaurantByName(String restaurantName) throws restaurantNotFoundException{
 
         //DELETE ABOVE STATEMENT AND WRITE CODE HERE
         for(Restaurant restaurant: restaurants) {
@@ -13,7 +13,7 @@ public class RestaurantService {
                 return restaurant;
             }
         }
-        return null;
+        throw new restaurantNotFoundException("Restaurant " + restaurantName + " not found.");
     }
 
 
