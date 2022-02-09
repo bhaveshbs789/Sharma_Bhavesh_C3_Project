@@ -1,10 +1,14 @@
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class RestaurantTest {
     Restaurant restaurant;
     //REFACTOR ALL THE REPEATED LINES OF CODE
@@ -14,11 +18,29 @@ class RestaurantTest {
     @Test
     public void is_restaurant_open_should_return_true_if_time_is_between_opening_and_closing_time(){
         //WRITE UNIT TEST CASE HERE
+        LocalTime openingTime = LocalTime.parse("10:30:00");
+        LocalTime closingTime = LocalTime.parse("22:00:00");
+        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        restaurant.addToMenu("Sweet corn soup",119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
+        Restaurant spyRestaurant = Mockito.spy(restaurant);
+        LocalTime twoHoursAfterOpeningTime = spyRestaurant.openingTime.plusHours(2);
+        Mockito.when(spyRestaurant.getCurrentTime()).thenReturn(twoHoursAfterOpeningTime);
+        assertTrue(spyRestaurant.isRestaurantOpen());
     }
 
     @Test
     public void is_restaurant_open_should_return_false_if_time_is_outside_opening_and_closing_time(){
         //WRITE UNIT TEST CASE HERE
+        LocalTime openingTime = LocalTime.parse("10:30:00");
+        LocalTime closingTime = LocalTime.parse("22:00:00");
+        restaurant =new Restaurant("Amelie's cafe","Chennai",openingTime,closingTime);
+        restaurant.addToMenu("Sweet corn soup",119);
+        restaurant.addToMenu("Vegetable lasagne", 269);
+        Restaurant spyRestaurant = Mockito.spy(restaurant);
+        LocalTime twoHoursAfterClosingTime = spyRestaurant.closingTime.plusHours(2);
+        Mockito.when(spyRestaurant.getCurrentTime()).thenReturn(twoHoursAfterClosingTime);
+        assertFalse(spyRestaurant.isRestaurantOpen());
 
     }
 
