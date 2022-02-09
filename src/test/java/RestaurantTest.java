@@ -5,7 +5,10 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalTime;
+import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -69,4 +72,26 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+    /*
+    Feature to be developed using the TDD approach for getting the total order
+    amount from the restaurant menu items.
+    */
+
+    @Test
+    public void return_total_amount_for_all_menu_items() throws restaurantNotFoundException{
+
+        LocalTime openingTime = LocalTime.parse("10:30:00");
+        LocalTime closingTime = LocalTime.parse("22:00:00");
+        restaurant = new Restaurant("Amelie's cafe","Hyderabad",openingTime,closingTime);
+        restaurant.addToMenu("Irani Chai", 20);
+        restaurant.addToMenu("Chole Bhature", 40);
+        restaurant.addToMenu("Idli", 20);
+        restaurant.addToMenu("Dosa", 30);
+        assertNotNull(restaurant.getMenu());
+
+        List<Item> menuItems = restaurant.getMenu();
+
+        assertThat(110, equalTo(restaurant.totalOrderAmount(menuItems)));
+    }
 }
