@@ -84,9 +84,6 @@ class RestaurantTest {
     @Test
     public void return_total_amount_for_all_menu_items() throws restaurantNotFoundException{
 
-        LocalTime openingTime = LocalTime.parse("10:30:00");
-        LocalTime closingTime = LocalTime.parse("22:00:00");
-        restaurant = new Restaurant("Amelie's cafe","Hyderabad",openingTime,closingTime);
         restaurant.addToMenu("Irani Chai", 20);
         restaurant.addToMenu("Chole Bhature", 40);
         restaurant.addToMenu("Idli", 20);
@@ -95,14 +92,11 @@ class RestaurantTest {
 
         List<Item> menuItems = restaurant.getMenu();
 
-        assertThat(110, equalTo(restaurant.totalOrderAmount(menuItems)));
+        assertThat(498, equalTo(restaurant.totalOrderAmount(menuItems)));
     }
 
     @Test
     public void selecting_zero_items_should_return_totalAmount_as_zero(){
-//        LocalTime openingTime = LocalTime.parse("10:30:00");
-//        LocalTime closingTime = LocalTime.parse("22:00:00");
-//        restaurant = new Restaurant("Amelie's cafe","Hyderabad",openingTime,closingTime);
 
         List<Item> menuItems = restaurant.getMenu();
         menuItems.clear();
@@ -113,9 +107,7 @@ class RestaurantTest {
 
     @Test
     public void selecting_random_items_should_return_totalAmount_of_selected_items_only(){
-//        LocalTime openingTime = LocalTime.parse("10:30:00");
-//        LocalTime closingTime = LocalTime.parse("22:00:00");
-//        restaurant = new Restaurant("Amelie's cafe","Hyderabad",openingTime,closingTime);
+
         restaurant.addToMenu("Irani Chai", 20);
         restaurant.addToMenu("Chole Bhature", 40);
         restaurant.addToMenu("Idli", 20);
