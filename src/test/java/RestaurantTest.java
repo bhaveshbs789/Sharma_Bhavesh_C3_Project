@@ -88,7 +88,7 @@ class RestaurantTest {
         restaurant.addToMenu("Chole Bhature", 40);
         restaurant.addToMenu("Idli", 20);
         restaurant.addToMenu("Dosa", 30);
-        assertNotNull(restaurant.getMenu());
+//        assertNotNull(restaurant.getMenu());
 
         List<Item> menuItems = restaurant.getMenu();
 
